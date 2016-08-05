@@ -1,4 +1,4 @@
-# configurado
+# Configurado
 Propósito é oferecer um arcabouço de configuração. Essa biblioteca contêm caracteristicas de Interface de Entrada pela Linha de comando (IELC), realiza o exame das propriedades de configuração para verificar se está correto e, além disso, adiciona as variáveis do ambiente.
 
 # Interface de Entrada pela Linha de comando (IELC)
