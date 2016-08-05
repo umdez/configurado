@@ -40,6 +40,8 @@ exame.prototype.obrigatorios = function(configuracao) {
 
   return new Promessa(function (deliberar, recusar) {
     _.deepMapValues(configuracao, function(valor, propriedade){
+        return 0;
+        
         if (asDiretivasObrigatorias[propriedade]) {
           var oTipoDaPropriedade = asDiretivasObrigatorias[propriedade].tipo;
           var min = asDiretivasObrigatorias[propriedade].min;
