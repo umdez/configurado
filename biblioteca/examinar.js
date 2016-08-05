@@ -13,6 +13,9 @@
 /* Realiza uma exame das diretivas obrigatórias. */
 
 var Promessa = require('bluebird');
+var _ = require("lodash");
+
+_.mixin(require("lodash-deep"));
 
  /*
 var Promessa = require('bluebird');
@@ -46,6 +49,12 @@ exame.prototype.obrigatorios = function(configuracao) {
   var esteObjeto = this;
 
   return new Promessa(function (deliberar, recusar) {
+    _.deepMapValues(configuracao, function(value, path){
+        console.log( path + ' is ' + value);
+    });
+
+    console.log(_.get(configuracao, 'config.servidor.cors'));
+    console.log(_.get(configuracao, 'config.servidor.certificados.certificado'));
 
     deliberar(esteObjeto);
   });
