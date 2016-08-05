@@ -53,8 +53,8 @@ exame.prototype.obrigatorios = function(configuracao) {
         console.log( path + ' is ' + value);
     });
 
-    console.log(_.get(configuracao, 'config.servidor.cors'));
-    console.log(_.get(configuracao, 'config.servidor.certificados.certificado'));
+    console.log(_.get(configuracao, 'servidor.cors'));
+    console.log(_.get(configuracao, 'servidor.certificados.certificado'));
 
     deliberar(esteObjeto);
   });
