@@ -36,7 +36,7 @@ var ielc = function(configuracao, pastaDeConfiguracaoPadrao) {
 
 /* @Método carregar(). Carrega as entradas para a ielc.
  */
-ielc.carregar = function () {
+ielc.prototype.carregar = function () {
 
   var esteObjeto = this;
 

@@ -42,7 +42,7 @@ var asDiretivasObrigatorias = {
 
 var exame = function() { };
 
-exame.obrigatorios = function(configuracao) {
+exame.prototype.obrigatorios = function(configuracao) {
   var esteObjeto = this;
 
   return new Promessa(function (deliberar, recusar) {

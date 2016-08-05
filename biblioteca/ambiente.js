@@ -23,7 +23,7 @@ var ambiente = function(configuracao) {
 
 /* @Método carregar(). Carrega as variáveis globais do ambiente.
  */
-ambiente.carregar = function () {
+ambiente.prototype.carregar = function () {
   
   var esteObjeto = this;
 

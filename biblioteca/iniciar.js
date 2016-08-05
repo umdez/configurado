@@ -15,9 +15,15 @@ var Ambiente = require('./ambiente');
 var IELC = require('./ielc'); 
 var Exame = require('./examinar'); 
 
-exports.iniciar = function(pastaDeConfiguracaoPadrao, pronto) {
+exports.iniciar = function(pastaDeConfiguracaoPadrao, registrador, pronto) {
   var esteObjeto = {};
   
+  if (!pastaDeConfiguracaoPadrao) {
+    throw new Error('É necessário uma pasta de configuração padrão.');
+  } else if (!registrador) {
+    throw new Error('É necessário informar o registrador.');
+  }
+
   esteObjeto.ambiente = new Ambiente(configuracao);
   esteObjeto.ielc = new IELC(configuracao, pastaDeConfiguracaoPadrao);
   esteObjeto.exame = new Exame();
@@ -58,13 +64,13 @@ exports.iniciar = function(pastaDeConfiguracaoPadrao, pronto) {
       .then(function () {
         pronto(configuracao);
       }).catch(function (erro) {
-        console.error(erro);
+        registrador.error(erro); 
       });
       
     });
     
   }).catch(function (erro) {
-    console.error(erro);
+    registrador.error(erro);
   });
 
 };
