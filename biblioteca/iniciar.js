@@ -18,6 +18,8 @@ var Exame = require('./examinar');
 exports.iniciar = function(pastaDeConfiguracaoPadrao, registrador, pronto) {
   var esteObjeto = {};
   
+  registrador.debug('Carregando o arquivo de configuração do servidor.');
+
   if (!pastaDeConfiguracaoPadrao) {
     throw new Error('É necessário uma pasta de configuração padrão.');
   } else if (!registrador) {

@@ -27,6 +27,8 @@ ambiente.prototype.carregar = function () {
   
   var esteObjeto = this;
 
+  registrador.debug('Carregando as variáveis do ambiente.');
+
   return new Promessa(function (deliberar, recusar) {
 
    /* Define todos as nossas variaveis do ambiente que devem ser incluidas na
