@@ -1,0 +1,41 @@
+{
+  "name": "configurado",
+  "description": "Oferece um arcabouço para trabalharmos com arquivos de configuração.",
+  "keywords": "configuração exame ielc ambiente",
+  "version": "0.0.1",
+  "author": "Léo Felippe <leofelippedias@hotmail.com.br>",
+  "main": "./biblioteca/iniciar.js",
+  "dependencies": {
+    "bluebird": "3.0.0",
+    "jsconfig": "0.2.0",
+    "lodash": "^3.10.1",
+    "lodash-deep": "2.0.0"
+  },
+  "devDependencies": {
+    
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "path": "git@github.com:umdez/configurado.git"
+    }
+  ],
+  "homepage": "https://github.com/umdez/configurado#readme",
+  "bugs": "https://github.com/umdez/configurado/issues",
+  "maintainers": [
+    {
+      "name": "umdez",
+      "email": "leofelippedias@hotmail.com.br",
+      "url": "https://github.com/umdez"
+    }
+  ],
+  "contributors": [
+    "https://github.com/orgs/devowly/people"
+  ],
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "node": ">=0.4.0"
+  },
+  "bin": "./biblioteca/iniciar.js"
+}
