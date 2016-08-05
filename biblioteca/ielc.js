@@ -40,8 +40,6 @@ ielc.prototype.carregar = function () {
 
   var esteObjeto = this;
 
-  registrador.debug('Carregando a Interface de Entrada pela Linha de Comando (IELC).');
-
   return new Promessa(function (deliberar, recusar) {
 
     esteObjeto.minhaConfiguracao.cli({
