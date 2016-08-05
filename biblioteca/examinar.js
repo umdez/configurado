@@ -17,31 +17,21 @@ var _ = require("lodash");
 
 _.mixin(require("lodash-deep"));
 
- /*
-var Promessa = require('bluebird');
-
-var propriedade = function(opcoes) {
-  this.tipo = opcoes.tipo;
-  this.min = opcoes.min;
-  this.max = opcoes.max;
-};
-
 var asDiretivasObrigatorias = {
 
-  //asDiretivasObrigatorias["armazenamento"]["dialeto"].tipo === 'texto'
+/* @Diretiva {armazenamento} O nosso sistema de armazenamento. */
+  "armazenamento.usuario":  {tipo: 'texto', min: 2, max: 30}
+, "armazenamento.senha":    {tipo: 'texto', min: 2, max: 30}
+, "armazenamento.database": {tipo: 'texto', min: 2, max: 30}
   
-  "armazenamento.dialeto":  new propriedade({tipo: 'texto', min: 3, max: 12})
-, "armazenamento.usuario":  new propriedade({tipo: 'texto', min: 3, max: 12})
-, "armazenamento.senha":    new propriedade({tipo: 'texto', min: 3, max: 12})
-, "armazenamento.database": new propriedade({tipo: 'texto', min: 3, max: 12})
-  
-, "servidor.porta":   new propriedade({tipo: 'numero', min: 300, max: 400 })
-  
-, "servidor.cors.origem":  new propriedade({tipo: 'matriz' })
-  
-, "servidorRest.base":    new propriedade({tipo: 'texto', min: 5, max: 45})    
+/* @Diretiva {servidor} O nosso servidor http. */
+, "servidor.porta":   {tipo: 'numero', min: 100, max: 600 }
 };
-*/
+
+var continuar = {
+  "ok": true
+, "erro" false
+};
 
 var exame = function() { };
 
@@ -49,15 +39,62 @@ exame.prototype.obrigatorios = function(configuracao) {
   var esteObjeto = this;
 
   return new Promessa(function (deliberar, recusar) {
-    _.deepMapValues(configuracao, function(value, path){
-        console.log( path + ' is ' + value);
-    });
+    _.deepMapValues(configuracao, function(valor, propriedade){
+        if (asDiretivasObrigatorias[propriedade]) {
+          var oTipoDaPropriedade = asDiretivasObrigatorias[propriedade].tipo;
+          var min = asDiretivasObrigatorias[propriedade].min;
+          var max = asDiretivasObrigatorias[propriedade].max;
 
-    console.log(_.get(configuracao, 'servidor.cors'));
-    console.log(_.get(configuracao, 'servidor.certificados.certificado'));
+          switch (oTipoDaPropriedade) {
+            case "texto":
+              if (_.isString(valor)) {
+                var seAlcanceCorreto = esteObjeto._seAlcanceEstaCorreto(_.toLength(valor), min, max);
+                if (seAlcanceCorreto) {
+                  // Tudo ok!
+                } else {
+                  throw new Error('A propriedade (' + propriedade + ') não foi configurada corretamente.');
+                }
+              } else {
+                throw new Error('A propriedade (' + propriedade + ') não foi configurada corretamente.');
+              }
+            break;
+            case "numero":
+              if (_.isNumber(valor)) {
+                var seAlcanceCorreto = esteObjeto._seAlcanceEstaCorreto(valor, min, max);
+                if (seAlcanceCorreto) {
+                  // Tudo ok!
+                } else {
+                  throw new Error('A propriedade (' + propriedade + ') não foi configurada corretamente.');
+                }
+                
+              } else {
+                throw new Error('A propriedade (' + propriedade + ') não foi configurada corretamente.');
+              }
+            break;
+            default: 
+          }
+        }
+    });
 
     deliberar(esteObjeto);
   });
+}
+
+exame.prototype._seAlcanceEstaCorreto = function(tamanho, min, max) {
+   
+  if (min >= 0 && max <= 9999 && max > min) {
+    var seAlcanceCorreto = _.inRange(valor, min, max);
+    if (seAlcanceCorreto) {
+      // Tudo perfeito!
+      return continuar.ok;
+    } else {
+      // Não está na extenção permitido
+      return continuar.erro;
+    }
+  } else {
+    // Min ou Max estão incorretos ou não definidos. Apenas continuar.
+    return continuar.ok;
+  }
 }
 
 module.exports = exame;
