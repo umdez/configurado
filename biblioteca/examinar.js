@@ -30,7 +30,7 @@ var asDiretivasObrigatorias = {
 
 var continuar = {
   "ok": true
-, "erro" false
+, "erro": false
 };
 
 var exame = function() { };
