@@ -33,53 +33,58 @@ var continuar = {
 , "erro": false
 };
 
-var exame = function() { };
+var exame = function(configuracao) {
+  
+  if (!configuracao) {
+    throw new Error('É necessário informar o objeto de configuração jsconfig.');
+  }
 
-exame.prototype.obrigatorios = function(configuracao) {
+  this.cfg = configuracao;
+};
+
+exame.prototype.verificarOsObrigatorios = function() {
   var esteObjeto = this;
 
-  return new Promessa(function (deliberar, recusar) {
-    _.deepMapValues(configuracao, function(valor, propriedade){
-        return 0;
-        
-        if (asDiretivasObrigatorias[propriedade]) {
-          var oTipoDaPropriedade = asDiretivasObrigatorias[propriedade].tipo;
-          var min = asDiretivasObrigatorias[propriedade].min;
-          var max = asDiretivasObrigatorias[propriedade].max;
+  _.deepMapValues(this.cfg, function(valor, propriedade) {
+    console.log('obrigatorios');
+    return 0;
+    
+    if (asDiretivasObrigatorias[propriedade] !== undefined) {
+      var oTipoDaPropriedade = asDiretivasObrigatorias[propriedade].tipo;
+      var min = asDiretivasObrigatorias[propriedade].min;
+      var max = asDiretivasObrigatorias[propriedade].max;
 
-          switch (oTipoDaPropriedade) {
-            case "texto":
-              if (_.isString(valor)) {
-                var seAlcanceCorreto = esteObjeto._seAlcanceEstaCorreto(_.toLength(valor), min, max);
-                if (seAlcanceCorreto) {
-                  // Tudo ok!
-                } else {
-                  throw new Error('A propriedade (' + propriedade + ') não foi configurada corretamente.');
-                }
-              } else {
-                throw new Error('A propriedade (' + propriedade + ') não foi configurada corretamente.');
-              }
-            break;
-            case "numero":
-              if (_.isNumber(valor)) {
-                var seAlcanceCorreto = esteObjeto._seAlcanceEstaCorreto(valor, min, max);
-                if (seAlcanceCorreto) {
-                  // Tudo ok!
-                } else {
-                  throw new Error('A propriedade (' + propriedade + ') não foi configurada corretamente.');
-                }
-                
-              } else {
-                throw new Error('A propriedade (' + propriedade + ') não foi configurada corretamente.');
-              }
-            break;
-            default: 
+      switch (oTipoDaPropriedade) {
+        case "texto":
+          if (_.isString(valor)) {
+            var seAlcanceCorreto = esteObjeto._seAlcanceEstaCorreto(_.toLength(valor), min, max);
+            if (seAlcanceCorreto) {
+              // Tudo ok!
+            } else {
+              throw new Error('A propriedade (' + propriedade + ') não foi configurada corretamente.');
+            }
+          } else {
+            throw new Error('A propriedade (' + propriedade + ') não foi configurada corretamente.');
           }
-        }
-    });
-
-    deliberar(esteObjeto);
+        break;
+        case "numero":
+          if (_.isNumber(valor)) {
+            var seAlcanceCorreto = esteObjeto._seAlcanceEstaCorreto(valor, min, max);
+            if (seAlcanceCorreto) {
+              // Tudo ok!
+            } else {
+              throw new Error('A propriedade (' + propriedade + ') não foi configurada corretamente.');
+            }
+            
+          } else {
+            throw new Error('A propriedade (' + propriedade + ') não foi configurada corretamente.');
+          }
+        break;
+        default: 
+      }
+    }
   });
+
 }
 
 exame.prototype._seAlcanceEstaCorreto = function(tamanho, min, max) {

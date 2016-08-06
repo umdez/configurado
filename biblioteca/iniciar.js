@@ -17,62 +17,53 @@ var Exame = require('./examinar');
 
 exports.iniciar = function(pastaDeConfiguracaoPadrao, registrador, pronto) {
   var esteObjeto = {};
-  
-  registrador.debug('Carregando o arquivo de configuração do servidor.');
 
   if (!pastaDeConfiguracaoPadrao) {
     throw new Error('É necessário uma pasta de configuração padrão.');
   } else if (!registrador) {
     throw new Error('É necessário informar o registrador.');
   }
+  
+  registrador.debug('Carregando o arquivo de configuração do servidor.');
 
   esteObjeto.ambiente = new Ambiente(configuracao);
   esteObjeto.ielc = new IELC(configuracao, pastaDeConfiguracaoPadrao);
-  esteObjeto.exame = new Exame();
+  esteObjeto.exame = new Exame(configuracao);
 
-  esteObjeto.ambiente.carregar()
-  .then(function (amb) {
-    esteObjeto.amb = amb;  
-  })
-  .then(function () {
-    return esteObjeto.ielc.carregar();
-  })
-  .then(function () {
+  // Nós carregamos as variaveis de ambiente
+  esteObjeto.ambiente.carregar();
+  
+  // Nós carregamos a interface elc.
+  esteObjeto.ielc.carregar();
 
-    // Aqui carregamos o arquivo de configuração padrão.
-    configuracao.defaults(pastaDeConfiguracaoPadrao);
-    
-    /* Aqui nós carregamos assincronamente a nossa configuração e prosseguimos.
-     *
-     * @Parametro {Objeto} [args] Argumento passados
-     * @Parametro {Objeto} [opcs] As opções dos argumentos.
-     */
-    configuracao.load(function(args, opcs) {
+  // Aqui carregamos o arquivo de configuração padrão.
+  configuracao.defaults(pastaDeConfiguracaoPadrao);
+  
+  /* Aqui nós carregamos assincronamente a nossa configuração e prosseguimos.
+   *
+   * @Parametro {Objeto} [args] Argumento passados
+   * @Parametro {Objeto} [opcs] As opções dos argumentos.
+   */
+  configuracao.load(function(args, opcs) {
 
-      // Armazenamos aqui o endereço e nome do arquivo de configuração por meio dos
-      // argumentos informados.
-      if(args.length > 0) {
-        opcs.ARQUIVO_DE_CONFIGURACAO = args[args.length - 1];
-      }
+    // Armazenamos aqui o endereço e nome do arquivo de configuração por meio dos
+    // argumentos informados.
+    if(args.length > 0) {
+      opcs.ARQUIVO_DE_CONFIGURACAO = args[args.length - 1];
+    }
 
-      // Faz a união ou substituição da configuração padrão com a configuração
-      // informada.
-      if(opcs.ARQUIVO_DE_CONFIGURACAO !== pastaDeConfiguracaoPadrao) {
-        configuracao.merge(require(opcs.ARQUIVO_DE_CONFIGURACAO));
-      }
+    // Faz a união ou substituição da configuração padrão com a configuração
+    // informada.
+    if(opcs.ARQUIVO_DE_CONFIGURACAO !== pastaDeConfiguracaoPadrao) {
+      configuracao.merge(require(opcs.ARQUIVO_DE_CONFIGURACAO));
+    }
 
-      // Examinaremos aqui se a configuração dos obrigatórios confere.
-      esteObjeto.exame.obrigatorios(configuracao)
-      .then(function () {
-        pronto(configuracao);
-      }).catch(function (erro) {
-        registrador.error(erro); 
-      });
-      
+    // Examinaremos aqui se a configuração dos obrigatórios confere.
+    esteObjeto.exame.verificarOsObrigatorios(configuracao, function() {
+      console.log('pronto()');
+      pronto(configuracao);
     });
     
-  }).catch(function (erro) {
-    registrador.error(erro);
   });
-
+  
 };
