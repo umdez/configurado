@@ -28,18 +28,18 @@ var ielc = function(configuracao, pastaDeConfiguracaoPadrao) {
     throw new Error('É necessário informar o arquivo de configuração padrão.');
   }
 
-  this.minhaConfiguracao = configuracao;
-  this.minhaPastaDeConfiguracaoPadrao = pastaDeConfiguracaoPadrao;
+  this.cfg = configuracao;
+  this.pastaDeCfg = pastaDeConfiguracaoPadrao;
 };
 
 /* @Método carregar(). Carrega as entradas para a ielc.
  */
 ielc.prototype.carregar = function () {
 
-  this.minhaConfiguracao.cli({
+  this.cfg.cli({
     
     // O arquivo de configuração.
-      ARQUIVO_DE_CONFIGURACAO: ['c', " Endereço da pasta e nome do arquivo de configuracao", 'path', this.minhaPastaDeConfiguracaoPadrao] 
+      ARQUIVO_DE_CONFIGURACAO: ['c', " Endereço da pasta e nome do arquivo de configuracao", 'path', this.pastaDeCfg] 
       
     // Configurações do nosso Banco de Dados.   
     , DIALETO_DO_BD:  ['armazenamento.dialeto', ['dialdb', " O dialeto utilizado, pode ser mysql, sqlite e postgres", 'string']]
