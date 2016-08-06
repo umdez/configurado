@@ -59,7 +59,7 @@ exports.iniciar = function(pastaDeConfiguracaoPadrao, registrador, pronto) {
     }
 
     // Examinaremos aqui se a configuração dos obrigatórios confere.
-    esteObjeto.exame.verificarOsObrigatorios(configuracao, function() {
+    esteObjeto.exame.verificarOsObrigatorios(function() {
       console.log('pronto()');
       pronto(configuracao);
     });
