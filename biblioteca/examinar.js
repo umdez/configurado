@@ -41,7 +41,7 @@ exame.prototype.verificarOsObrigatorios = function(cd) {
 
   _.deepMapValues(this.cfg, function(valor, propriedade) {
 
-    //return 0;
+    return 0;
     
     if (asDiretivasObrigatorias.hasOwnProperty(propriedade)) {
       var oTipoDaPropriedade = asDiretivasObrigatorias[propriedade].tipo;
