@@ -12,7 +12,6 @@
 
 /* Realiza uma exame das diretivas obrigatórias. */
 
-var Promessa = require('bluebird');
 var _ = require("lodash");
 
 _.mixin(require("lodash-deep"));
@@ -28,11 +27,6 @@ var asDiretivasObrigatorias = {
 , "servidor.porta":   {tipo: 'numero', min: 100, max: 600 }
 };
 
-var continuar = {
-  "ok": true
-, "erro": false
-};
-
 var exame = function(configuracao) {
   
   if (!configuracao) {
@@ -46,10 +40,10 @@ exame.prototype.verificarOsObrigatorios = function(cd) {
   var esteObjeto = this;
 
   _.deepMapValues(this.cfg, function(valor, propriedade) {
-    console.log('obrigatorios');
-    return 0;
+
+    //return 0;
     
-    if (asDiretivasObrigatorias[propriedade] !== undefined) {
+    if (asDiretivasObrigatorias.hasOwnProperty(propriedade)) {
       var oTipoDaPropriedade = asDiretivasObrigatorias[propriedade].tipo;
       var min = asDiretivasObrigatorias[propriedade].min;
       var max = asDiretivasObrigatorias[propriedade].max;
@@ -57,7 +51,7 @@ exame.prototype.verificarOsObrigatorios = function(cd) {
       switch (oTipoDaPropriedade) {
         case "texto":
           if (_.isString(valor)) {
-            var seAlcanceCorreto = esteObjeto._seAlcanceEstaCorreto(_.toLength(valor), min, max);
+            var seAlcanceCorreto = esteObjeto._seAlcanceEstiverCorreto(_.toLength(valor), min, max);
             if (seAlcanceCorreto) {
               // Tudo ok!
             } else {
@@ -69,7 +63,7 @@ exame.prototype.verificarOsObrigatorios = function(cd) {
         break;
         case "numero":
           if (_.isNumber(valor)) {
-            var seAlcanceCorreto = esteObjeto._seAlcanceEstaCorreto(valor, min, max);
+            var seAlcanceCorreto = esteObjeto._seAlcanceEstiverCorreto(valor, min, max);
             if (seAlcanceCorreto) {
               // Tudo ok!
             } else {
@@ -84,24 +78,24 @@ exame.prototype.verificarOsObrigatorios = function(cd) {
       }
     }
   });
-  
+
   cd();
 }
 
-exame.prototype._seAlcanceEstaCorreto = function(tamanho, min, max) {
+exame.prototype._seAlcanceEstiverCorreto = function(tamanho, min, max) {
    
   if (min >= 0 && max <= 9999 && max > min) {
     var seAlcanceCorreto = _.inRange(valor, min, max);
     if (seAlcanceCorreto) {
       // Tudo perfeito!
-      return continuar.ok;
+      return true;
     } else {
       // Não está na extenção permitido
-      return continuar.erro;
+      return false;
     }
   } else {
     // Min ou Max estão incorretos ou não definidos. Apenas continuar.
-    return continuar.ok;
+    return true;
   }
 }
 

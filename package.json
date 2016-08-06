@@ -6,7 +6,6 @@
   "author": "Léo Felippe <leofelippedias@hotmail.com.br>",
   "main": "./biblioteca/iniciar.js",
   "dependencies": {
-    "bluebird": "3.0.0",
     "jsconfig": "0.2.0",
     "lodash": "^3.10.1",
     "lodash-deep": "2.0.0"
