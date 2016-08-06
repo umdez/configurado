@@ -85,7 +85,7 @@ exame.prototype.verificarOsObrigatorios = function(cd) {
 exame.prototype._seAlcanceEstiverCorreto = function(tamanho, min, max) {
    
   if (min >= 0 && max <= 9999 && max > min) {
-    var seAlcanceCorreto = _.inRange(valor, min, max);
+    var seAlcanceCorreto = _.inRange(tamanho, min, max);
     if (seAlcanceCorreto) {
       // Tudo perfeito!
       return true;
