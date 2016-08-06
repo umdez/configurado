@@ -36,7 +36,7 @@ var exame = function(configuracao) {
   this.cfg = configuracao;
 };
 
-exame.prototype.verificarOsObrigatorios = function(cd) {
+exame.prototype.verificarOsObrigatorios = function() {
   var esteObjeto = this;
 
   _.deepMapValues(this.cfg, function(valor, propriedade) {
@@ -79,7 +79,6 @@ exame.prototype.verificarOsObrigatorios = function(cd) {
     }
   });
 
-  cd();
 }
 
 exame.prototype._seAlcanceEstiverCorreto = function(tamanho, min, max) {
