@@ -14,7 +14,7 @@ var configuracao = require('jsconfig');
 var registrador = require('../utilitarios/registrador')('configurado');
 
 exports.iniciar = function(pastaDeConfiguracaoPadrao, pronto) {
-  var esteObjeto = {};
+  var esteObjeto = this;
 
   if (!pastaDeConfiguracaoPadrao) {
     throw new Error('É necessário uma pasta de configuração padrão.');
