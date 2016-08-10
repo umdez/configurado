@@ -11,7 +11,7 @@ O IELC fornecer uma forma de configuração pela linha de comando. Os comandos d
 
 Para mantermos o controle sobre a nossa configuração, fica necessário realizarmos o exame daquelas propriedades obrigatórias. 
 
-# Como iniciar
+# Como usar
 Passar o arquivo de configuração como argumento para o método iniciar. Abaixo um exemplo completo.
 
 ```javascript
