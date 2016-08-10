@@ -20,26 +20,14 @@
  * https://github.com/dodo/node-jsconfig#configcli
  */
 
-var ielc = function(configuracao, pastaDeConfiguracaoPadrao) {
-  
-  if (!configuracao) {
-    throw new Error('É necessário informar o objeto de configuração jsconfig.');
-  } else if (!pastaDeConfiguracaoPadrao) {
-    throw new Error('É necessário informar o arquivo de configuração padrão.');
-  }
-
-  this.cfg = configuracao;
-  this.pastaDeCfg = pastaDeConfiguracaoPadrao;
-};
-
-/* @Método carregar(). Carrega as entradas para a ielc.
+/* @Função carregar(). Carrega as entradas para a ielc.
  */
-ielc.prototype.carregar = function () {
+exports.carregar = function (configuracao, pastaDeConfiguracaoPadrao) {
 
-  this.cfg.cli({
+  configuracao.cli({
     
     // O arquivo de configuração.
-      ARQUIVO_DE_CONFIGURACAO: ['c', " Endereço da pasta e nome do arquivo de configuracao", 'path', this.pastaDeCfg] 
+      ARQUIVO_DE_CONFIGURACAO: ['c', " Endereço da pasta e nome do arquivo de configuracao", 'path', pastaDeConfiguracaoPadrao] 
       
     // Configurações do nosso Banco de Dados.   
     , DIALETO_DO_BD:  ['armazenamento.dialeto', ['dialdb', " O dialeto utilizado, pode ser mysql, sqlite e postgres", 'string']]
@@ -69,5 +57,3 @@ ielc.prototype.carregar = function () {
   });
   
 };
-
-module.exports = ielc;

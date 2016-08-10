@@ -10,18 +10,9 @@
  * Versão atual 0.0.1-Beta
  */
 
-var ambiente = function(configuracao) {
-
-  if (!configuracao) {
-    throw new Error('É necessário informar o objeto de configuração jsconfig.');
-  } 
-
-  this.cfg = configuracao;
-};
-
-/* @Método carregar(). Carrega as variáveis globais do ambiente.
+/* @Função carregar(). Carrega as variáveis globais do ambiente.
  */
-ambiente.prototype.carregar = function () {
+exports.carregar = function (configuracao) {
 
  /* Define todos as nossas variaveis do ambiente que devem ser incluidas na
   * nossa configuração padrão. Isso faz reescrever os valores do arquivo de
@@ -29,10 +20,8 @@ ambiente.prototype.carregar = function () {
   *
   * Para mais informações @veja https://github.com/dodo/node-jsconfig#configset
   */
-  this.cfg.set('env', {
+  configuracao.set('env', {
   
   });
 
 };
-
-module.exports = ambiente;

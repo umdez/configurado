@@ -27,31 +27,21 @@ var asDiretivasObrigatorias = {
 , "servidor.porta":   {tipo: 'numero', min: 100, max: 600 }
 };
 
-var exame = function(configuracao) {
-  
-  if (!configuracao) {
-    throw new Error('É necessário informar o objeto de configuração jsconfig.');
-  }
-
-  this.cfg = configuracao;
-};
-
-exame.prototype.verificarOsObrigatorios = function() {
+exports.verificar = function(configuracao) {
   var esteObjeto = this;
 
-  _.deepMapValues(this.cfg, function(valor, propriedade) {
-
-    return 0;
+  _.deepMapValues(configuracao, function(valor, propriedade) {
     
     if (asDiretivasObrigatorias.hasOwnProperty(propriedade)) {
       var oTipoDaPropriedade = asDiretivasObrigatorias[propriedade].tipo;
       var min = asDiretivasObrigatorias[propriedade].min;
       var max = asDiretivasObrigatorias[propriedade].max;
 
+      /*
       switch (oTipoDaPropriedade) {
         case "texto":
           if (_.isString(valor)) {
-            var seAlcanceCorreto = esteObjeto._seAlcanceEstiverCorreto(_.toLength(valor), min, max);
+            var seAlcanceCorreto = esteObjeto.seAlcanceEstiverCorreto(_.toLength(valor), min, max);
             if (seAlcanceCorreto) {
               // Tudo ok!
             } else {
@@ -63,7 +53,7 @@ exame.prototype.verificarOsObrigatorios = function() {
         break;
         case "numero":
           if (_.isNumber(valor)) {
-            var seAlcanceCorreto = esteObjeto._seAlcanceEstiverCorreto(valor, min, max);
+            var seAlcanceCorreto = esteObjeto.seAlcanceEstiverCorreto(valor, min, max);
             if (seAlcanceCorreto) {
               // Tudo ok!
             } else {
@@ -76,12 +66,13 @@ exame.prototype.verificarOsObrigatorios = function() {
         break;
         default: 
       }
+      */
     }
   });
 
 }
 
-exame.prototype._seAlcanceEstiverCorreto = function(tamanho, min, max) {
+var seAlcanceEstiverCorreto = function(tamanho, min, max) {
    
   if (min >= 0 && max <= 9999 && max > min) {
     var seAlcanceCorreto = _.inRange(tamanho, min, max);
@@ -97,5 +88,3 @@ exame.prototype._seAlcanceEstiverCorreto = function(tamanho, min, max) {
     return true;
   }
 }
-
-module.exports = exame;

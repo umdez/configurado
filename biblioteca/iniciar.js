@@ -11,11 +11,9 @@
  */
 
 var configuracao = require('jsconfig');
-var Ambiente = require('./ambiente'); 
-var IELC = require('./ielc'); 
-var Exame = require('./examinar'); 
+var registrador = require('../utilitarios/registrador')('configurado');
 
-exports.iniciar = function(pastaDeConfiguracaoPadrao, registrador, pronto) {
+exports.iniciar = function(pastaDeConfiguracaoPadrao, pronto) {
   var esteObjeto = {};
 
   if (!pastaDeConfiguracaoPadrao) {
@@ -26,15 +24,15 @@ exports.iniciar = function(pastaDeConfiguracaoPadrao, registrador, pronto) {
   
   registrador.debug('Carregando o arquivo de configuração do servidor.');
 
-  esteObjeto.ambiente = new Ambiente(configuracao);
-  esteObjeto.ielc = new IELC(configuracao, pastaDeConfiguracaoPadrao);
-  esteObjeto.exame = new Exame(configuracao);
+  this.ambiente = require('./ambiente'); 
+  this.ielc = require('./ielc'); 
+  this.exame = require('./exame'); 
 
   // Nós carregamos as variaveis de ambiente
-  esteObjeto.ambiente.carregar();
+  this.ambiente.carregar(configuracao);
   
   // Nós carregamos a interface elc.
-  esteObjeto.ielc.carregar();
+  this.ielc.carregar(configuracao, pastaDeConfiguracaoPadrao);
 
   // Aqui carregamos o arquivo de configuração padrão.
   configuracao.defaults(pastaDeConfiguracaoPadrao);
@@ -59,7 +57,7 @@ exports.iniciar = function(pastaDeConfiguracaoPadrao, registrador, pronto) {
     }
 
     // Examinaremos aqui se a configuração dos obrigatórios confere.
-    esteObjeto.exame.verificarOsObrigatorios();
+    esteObjeto.exame.verificar(configuracao);
     
     pronto(configuracao);
   });
