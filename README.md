@@ -1,7 +1,7 @@
 # Configurado
 Propósito é oferecer um arcabouço de configuração. Essa biblioteca contêm caracteristicas de Interface de Entrada pela Linha de comando (IELC), realiza o exame das propriedades de configuração para verificar se está correto e, além disso, adiciona as variáveis do ambiente.
 
-## A interface de Entrada pela Linha de comando (IELC)
+## A interface de Entrada por Linha de comando (IELC)
 
 O IELC fornecer uma forma de configuração pela linha de comando. Os comandos disponíveis são:
 - node iniciar.js [OPCOES] [ARGS]
