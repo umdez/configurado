@@ -16,7 +16,7 @@ Passar o arquivo de configuração como argumento para o método iniciar. Abaixo
 
 ```javascript
 var pasta = require('path');
-var pastaDeConfiguracaoPadrao = pasta.join(__dirname, '/configuracao/configuracao.js');
+var pastaDeConfiguracaoPadrao = pasta.join(__dirname, '/a/pasta/de/configuracao/configuracao.js');
 var configurado = require('configurado');
 
 // Aqui iniciamos o serviços de configuração do nosso aplicativo.
